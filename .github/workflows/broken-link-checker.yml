@@ -21,4 +21,6 @@ jobs:
           python3 -m pip install requests beautifulsoup4
 
       - name: Run the crawler
+        env:
+          DEBUG_MODE: true
         run: python3 .github/scripts/crawl.py
