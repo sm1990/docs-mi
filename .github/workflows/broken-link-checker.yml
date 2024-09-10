@@ -1,0 +1,28 @@
+name: Check for broken links in MI Docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check_broken_links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout docs-mi
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python Packages
+        run: |
+          pip install requests
+      
+      - name: Install BeautifulSoup
+        run: |
+          pip install beautifulsoup4
+
+      - name: Run the crawler
+        run: python3 .github/scripts/crawl.py
