@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs mkdocs-material markdown-include  # Install mkdocs, theme, and markdown_include extension
+          pip install mkdocs mkdocs-material markdown-include mkdocs-markdownextradata-plugin  # Install required plugins
 
       - name: Deploy to the `gh-pages` branch
         run: |
