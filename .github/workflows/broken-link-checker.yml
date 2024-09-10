@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Python Packages
         run: |
-          pip install requests
+          python3 -m pip install requests
       
       - name: Install BeautifulSoup
         run: |
