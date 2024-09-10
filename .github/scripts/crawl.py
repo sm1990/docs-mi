@@ -4,10 +4,19 @@ import re
 from urllib.parse import urljoin, urlparse, urlunparse
 from concurrent.futures import ThreadPoolExecutor
 import logging
+import sys
+import os
 import time
 
-# Setup logging
-logging.basicConfig(filename='crawling.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Set up logging to both file and stdout
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('crawling.log'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
 visited_urls = set()
 checked_correct_urls = set()
@@ -23,6 +32,14 @@ VALID_DOMAINS = [
     "https://mi.docs.wso2.com/en/latest",
     "https://mi.docs.wso2.com/en/4.3.0"
 ]
+
+# Check if debug mode is enabled via environment variable
+DEBUG_MODE = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
+
+def debug_log(message):
+    """Log message to stdout if DEBUG_MODE is enabled."""
+    if DEBUG_MODE:
+        print(message)
 
 def remove_fragment(url):
     parsed_url = urlparse(url)
@@ -53,6 +70,7 @@ def check_url(url, target_redirect, parent_url=None):
 
     try:
         link_response = requests.get(url, headers=headers, allow_redirects=True)
+        link_response.raise_for_status()  # Raises exception for HTTP error codes
         if link_response.status_code in (301, 302) and link_response.headers.get('Location') == target_redirect:
             visited_urls.add(url)
             logging.error(f"{url} redirects to {link_response.headers.get('Location')} and is found on {parent_url}")
@@ -68,15 +86,20 @@ def check_url(url, target_redirect, parent_url=None):
             logging.error(f"{url} returns 404 error and is found on {parent_url}")
             broken_links.append([url, None, parent_url, '404 Not Found'])
             return False  # Error found
-    except requests.RequestException as e:
-        logging.error(f"Failed to fetch {url} and is found in {parent_url}: {e}")
-        broken_links.append([url, None, parent_url, f"Failed to fetch {url}: {e}"])
+    except requests.exceptions.HTTPError as http_err:
+        logging.error(f"HTTP error occurred: {http_err}")
+        broken_links.append([url, None, parent_url, f"HTTP error: {http_err}"])
+        return False  # Error found
+    except Exception as err:
+        logging.error(f"Other error occurred: {err}")
+        broken_links.append([url, None, parent_url, f"Failed to fetch {url}: {err}"])
         return False  # Error found
 
     checked_correct_urls.add(url)
     return True  # No error found
 
 def find_redirects(url, target_redirect, base_url, max_depth=300, depth=0):
+    debug_log(f"Processing URL: {url}, Depth: {depth}")
     if depth > max_depth or url in visited_urls:
         return
     
@@ -91,6 +114,7 @@ def find_redirects(url, target_redirect, base_url, max_depth=300, depth=0):
 
     try:
         response = requests.get(url, headers=headers)
+        response.raise_for_status()  # Raises exception for HTTP error codes
     except requests.RequestException as e:
         logging.error(f"Failed to fetch {url}: {e}")
         return
@@ -117,6 +141,7 @@ def find_redirects(url, target_redirect, base_url, max_depth=300, depth=0):
         full_url = remove_fragment(full_url)
 
         logging.info(f"Found link: {full_url}")
+        debug_log(f"Found link: {full_url}")
 
         if is_same_domain(full_url, base_url):
             if not is_valid_domain(full_url):
