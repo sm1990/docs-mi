@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Python Packages
         run: |
-          python3 -m pip install requests beautifulsoup4
+          python3 -m pip install requests==2.26.0 beautifulsoup4==4.10.0
 
       - name: Run the crawler
         run: python3 .github/scripts/crawl.py
