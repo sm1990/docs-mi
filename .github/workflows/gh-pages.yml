@@ -24,4 +24,5 @@ jobs:
 
       - name: Deploy to the `gh-pages` branch
         run: |
-          mkdocs gh-deploy --force  # Deploy the content from the `gh` branch to `gh-pages`
+          mkdocs gh-deploy --config-file en/mkdocs.yml --force
+
