@@ -1,0 +1,27 @@
+name: Deploy MkDocs site to GitHub Pages
+
+on:
+  workflow_dispatch:
+    branches:
+      - gh  # Set this to your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs mkdocs-material  # Install mkdocs and any plugins you need
+
+      - name: Deploy to GitHub Pages
+        run: |
+          mkdocs gh-deploy --force
