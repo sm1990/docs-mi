@@ -4,6 +4,7 @@ import re
 from urllib.parse import urljoin, urlparse, urlunparse
 from concurrent.futures import ThreadPoolExecutor
 import logging
+import time
 
 # Setup logging
 logging.basicConfig(filename='crawling.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -13,7 +14,9 @@ checked_correct_urls = set()
 broken_links = []
 
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Referer': 'https://mi.docs.wso2.com/en/latest/',
+    'Accept-Language': 'en-US,en;q=0.9'
 }
 
 VALID_DOMAINS = [
@@ -92,6 +95,9 @@ def find_redirects(url, target_redirect, base_url, max_depth=300, depth=0):
         logging.error(f"Failed to fetch {url}: {e}")
         return
 
+    # Add a delay to avoid triggering rate limits
+    time.sleep(1)
+
     soup = BeautifulSoup(response.text, 'html.parser')
 
     nav_elements = soup.find_all('nav', {'aria-label': 'Navigation'})
@@ -109,6 +115,8 @@ def find_redirects(url, target_redirect, base_url, max_depth=300, depth=0):
 
         full_url = join_url(url, link['href'])
         full_url = remove_fragment(full_url)
+
+        logging.info(f"Found link: {full_url}")
 
         if is_same_domain(full_url, base_url):
             if not is_valid_domain(full_url):
