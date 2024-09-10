@@ -16,21 +16,9 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Create virtual environment
-        run: |
-          python3 -m venv path/to/venv
-
-      - name: Activate virtual environment
-        run: |
-          source path/to/venv/bin/activate
-
       - name: Install Python Packages
         run: |
-          python3 -m pip install requests
-      
-      - name: Install BeautifulSoup
-        run: |
-          pip install beautifulsoup4
+          python3 -m pip install requests beautifulsoup4
 
       - name: Run the crawler
         run: python3 .github/scripts/crawl.py
