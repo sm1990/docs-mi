@@ -25,6 +25,8 @@ repo_name: sm1990/docs-mi
 repo_url: https://github.com/sm1990/docs-mi
 edit_uri: https://github.com/wso2/docs-mi/edit/4.2.0/en/docs/
 dev_addr: localhost:8000
+deploy:
+  remote_branch: gh  # Deploy to the `gh` branch
 
 # Copyright
 copyright: WSO2 Micro Integrator - Documentation
