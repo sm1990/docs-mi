@@ -1,9 +1,9 @@
 name: Deploy MkDocs site to GitHub Pages
 
 on:
-  workflow_dispatch:
+  push:
     branches:
-      - gh  # Set this to your default branch
+      gh
 
 jobs:
   deploy:
@@ -22,6 +22,6 @@ jobs:
         run: |
           pip install mkdocs mkdocs-material  # Install mkdocs and any plugins you need
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to the `gh-pages` branch
         run: |
           mkdocs gh-deploy --force
