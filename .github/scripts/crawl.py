@@ -165,4 +165,16 @@ def crawl_website(base_url, target_redirect):
 
 if __name__ == "__main__":
     base_url = "https://mi.docs.wso2.com/en/latest/"
-    target_redirect = "https://mi.docs.wso2.com/en/latest/page-not
+    target_redirect = "https://mi.docs.wso2.com/en/latest/page-not-found/"
+    
+    crawl_website(base_url, target_redirect)
+    
+    if broken_links:
+        print("\nBroken Links Report:")
+        for link in broken_links:
+            print(f"Source URL: {link[0]}, Redirected URL: {link[1]}, Containing Page: {link[2]}, Description: {link[3]}")
+        raise Exception("Broken links were found. See report above.")
+    else:
+        print("No broken links found.")
+    
+    logging.info("Crawling completed!!!")
