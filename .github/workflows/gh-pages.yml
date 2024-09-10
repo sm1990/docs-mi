@@ -2,17 +2,16 @@ name: Deploy MkDocs site to GitHub Pages
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      gh
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout the `gh` branch
         uses: actions/checkout@v3
+        with:
+          ref: gh  # Checkout the `gh` branch
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -25,4 +24,4 @@ jobs:
 
       - name: Deploy to the `gh-pages` branch
         run: |
-          mkdocs gh-deploy --force
+          mkdocs gh-deploy --force  # Deploy the content from the `gh` branch to `gh-pages`
