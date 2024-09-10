@@ -13,6 +13,9 @@ jobs:
         with:
           ref: gh  # Checkout the `gh` branch
 
+      - name: List files in the current directory
+        run: ls -la  # Lists all files in the current directory
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
