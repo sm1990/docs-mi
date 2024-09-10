@@ -18,11 +18,11 @@
 site_name: WSO2 Micro Integrator Documentation 4.2.0
 site_description: Documentation for WSO2 Micro Integrator
 site_author: WSO2
-site_url: https://mi.docs.wso2.com/en/latest/
+site_url: https://sm1990.github.io/docs-mi/
 
 # Repository
-repo_name: wso2/docs-mi
-repo_url: https://github.com/wso2/docs-mi
+repo_name: sm1990/docs-mi
+repo_url: https://github.com/sm1990/docs-mi
 edit_uri: https://github.com/wso2/docs-mi/edit/4.2.0/en/docs/
 dev_addr: localhost:8000
 
