@@ -164,8 +164,10 @@ def crawl_website(base_url, target_redirect):
     find_redirects(base_url, target_redirect, base_url)
 
 if __name__ == "__main__":
-    base_url = "https://mi.docs.wso2.com/en/latest/"
-    target_redirect = "https://mi.docs.wso2.com/en/latest/page-not-found/"
+    #base_url = "https://mi.docs.wso2.com/en/latest/"
+    #target_redirect = "https://mi.docs.wso2.com/en/latest/page-not-found/"
+    base_url = "https://sm1990.github.io/docs-mi/"
+    target_redirect = "https://sm1990.github.io/docs-mi/page-not-found/"
     
     crawl_website(base_url, target_redirect)
     
