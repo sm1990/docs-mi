@@ -39,7 +39,8 @@ headers = {
 
 VALID_DOMAINS = [
     "https://mi.docs.wso2.com/en/latest",
-    "https://mi.docs.wso2.com/en/4.3.0"
+    "https://mi.docs.wso2.com/en/4.3.0",
+    "https://sm1990.github.io/docs-mi/"
 ]
 
 DEBUG_MODE = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
