@@ -33,14 +33,13 @@ broken_links = []
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:90.0) Gecko/20100101 Firefox/90.0',
-    'Referer': 'https://wso2.github.io/docs-mi/',
+    'Referer': 'https://mi.docs.wso2.com/en/latest/',
     'Accept-Language': 'en-US,en;q=0.9'
 }
 
 VALID_DOMAINS = [
     "https://mi.docs.wso2.com/en/latest",
     "https://mi.docs.wso2.com/en/4.3.0",
-    "https://wso2.github.io/docs-mi/"
 ]
 
 DEBUG_MODE = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
@@ -165,8 +164,8 @@ def crawl_website(base_url, target_redirect):
     find_redirects(base_url, target_redirect, base_url)
 
 if __name__ == "__main__":
-    base_url = "https://wso2.github.io/docs-mi/"
-    target_redirect = "https://wso2.github.io/docs-mi/page-not-found/"
+    base_url = "https://mi.docs.wso2.com/en/latest/"
+    target_redirect = "https://mi.docs.wso2.com/en/page-not-found/"
 
     crawl_website(base_url, target_redirect)
 
