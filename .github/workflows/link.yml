@@ -6,10 +6,10 @@ on:
       deployment:
         description: 'Select the deployment to check links in'
         required: true
-        default: 'https://mi.docs.wso2.com/en/latest'
+        default: 'mi.docs.wso2.com/en/latest'
         type: choice
         options:
-        - https://mi.docs.wso2.com/en/latest
+        - mi.docs.wso2.com/en/latest
 
 jobs:
   linkChecker:
